@@ -25,8 +25,10 @@ jobs:
 
       - name: Run notifier
         env:
-          WEBHOOK_MINTYERIM07: ${{ secrets.WEBHOOK_MINTYERIM07 }}
-          WEBHOOK_SERENA06: ${{ secrets.WEBHOOK_SERENA06 }}
+          TOKEN_MINTYERIM07: ${{ secrets.TOKEN_MINTYERIM07 }}
+          CHANNEL_MINTYERIM07: ${{ secrets.CHANNEL_MINTYERIM07 }}
+          TOKEN_SERENA06: ${{ secrets.TOKEN_SERENA06 }}
+          CHANNEL_SERENA06: ${{ secrets.CHANNEL_SERENA06 }}
         run: python notifier.py
 
       - name: Save state if updated
@@ -36,5 +38,6 @@ jobs:
           git add state.json
           if ! git diff --staged --quiet; then
             git commit -m "Update live state [skip ci]"
+            git pull --rebase origin main
             git push
           fi
